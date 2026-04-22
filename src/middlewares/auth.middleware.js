@@ -1,15 +1,7 @@
-// MIDDLEWARE DE AUTENTICAÇÃO: Verifica se o solicitante tem permissão.
-// Funciona como o segurança na porta da biblioteca:
-// sem crachá, sem entrada.
-//
-// ATENÇÃO: Esta é uma implementação SIMPLIFICADA para fins didáticos.
-// A partir da Aula 44, utilizaremos JWT (JSON Web Tokens) de verdade.
-
-// Chave de acesso temporária — em produção, isso vem de variável de ambiente
-const CHAVE_ACESSO = 'biblioteca-ralph-teddy-2025';
+const CHAVE_ACESSO = 'Veterinária';
 
 const autenticar = (req, res, next) => {
-  // O cliente envia: Authorization: Bearer biblioteca-ralph-teddy-2025
+  
   const authHeader = req.headers['authorization'];
 
   if (!authHeader) {
@@ -19,7 +11,7 @@ const autenticar = (req, res, next) => {
     });
   }
 
-  // Extrai apenas o token (remove o prefixo 'Bearer ')
+  
   const token = authHeader.split(' ')[1];
 
   if (token !== CHAVE_ACESSO) {
@@ -28,7 +20,7 @@ const autenticar = (req, res, next) => {
     });
   }
 
-  // Token válido — libera a passagem para o próximo posto
+ 
   next();
 };
 

@@ -16,5 +16,5 @@ app.use(errorHandler);
 
 const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`[SERVIDOR] Ralph & Teddy operando em http://localhost:${PORT}`);
+  console.log(`conexão do banco realizada em http://localhost:${PORT}`);
 });
