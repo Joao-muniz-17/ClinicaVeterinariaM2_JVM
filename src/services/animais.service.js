@@ -15,17 +15,18 @@ const pool = require('../database/connection.js')
   };
   
  
-  const criarAnimal = async ({ titulo, autor }) => {
-    if (!nome || !email) {
-      throw new Error('Nome e e-mail são obrigatórios.');
+  const criarAnimal = async ({ nome, especie, raca, data_nascimento, tutor_id }) => {
+    if (!nome || tutor_id) {
+      throw new Error('Nome e obrgatorio.');
     }
 
-    const query = `
-    INSERT INTO animais (nome, email)
-    VALUES ($1, $2)
-    RETURNING *;`;
+     const query = `
+    INSERT INTO animais (nome, especie, raca, data_nascimento, tutor_id)
+    VALUES ($1, $2, $3, $4, $5)
+    RETURNING *;
+  `;
 
-    const values = [nome, email];
+    const values = [nome, especie, raca, data_nascimento, tutor_id];
 
     const result = await pool.query(query, values);
 
@@ -33,19 +34,19 @@ const pool = require('../database/connection.js')
 
   };
 
-  const atualizarAnimal = async (id, { nome, email }) => {
-    if (!nome || !email) {
+  const atualizarAnimal = async (id, { nome, especie, raca, data_nascimento, tutor_id }) => {
+    if (!nome || tutor_id) {
       throw new Error('Nome e e-mail são obrigatórios.');
     }
   
     const query = `
-      UPDATE tutores
-      SET nome = $1, email = $2
-      WHERE id = $3
-      RETURNING *;
+      UPDATE animais
+    SET nome=$1, especie=$2, raca=$3, data_nascimento=$4, tutor_id=$5
+    WHERE id=$6
+    RETURNING *;
     `;
   
-    const values = [nome, email, id];
+    const values = [nome, especie, raca, data_nascimento, tutor_id, id];
     const result = await pool.query(query, values);
   
     return result.rows[0] || null;

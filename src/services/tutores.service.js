@@ -15,17 +15,17 @@ const pool = require('../database/connection.js')
   };
   
   
-  const criarTutor = async ({ nome, email }) => {
+  const criarTutor = async ({ nome, telefone, email }) => {
     if (!nome || !email) {
       throw new Error('Nome e e-mail são obrigatórios.');
     }
 
     const query = `
-    INSERT INTO tutores (nome, email)
-    VALUES ($1, $2)
+    INSERT INTO tutores (nome, telefone, email)
+    VALUES ($1, $2, $3)
     RETURNING *;`;
 
-    const values = [nome, email];
+    const values = [nome, telefone, email];
 
     const result = await pool.query(query, values);
 
@@ -33,19 +33,19 @@ const pool = require('../database/connection.js')
 
   };
 
-  const atualizarTutor = async (id, { nome, email }) => {
+  const atualizarTutor = async (id, { nome, telefone, email }) => {
     if (!nome || !email) {
       throw new Error('Nome e e-mail são obrigatórios.');
     }
   
     const query = `
       UPDATE tutores
-      SET nome = $1, email = $2
-      WHERE id = $3
+      SET nome = $1, telefone = $2, email = $3
+      WHERE id = $4
       RETURNING *;
     `;
   
-    const values = [nome, email, id];
+    const values = [nome, telefone, email, id];
     const result = await pool.query(query, values);
   
     return result.rows[0] || null;

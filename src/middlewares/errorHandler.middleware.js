@@ -9,6 +9,7 @@ const errorHandler = (err, req, res, next) => {
       erro: err.message || 'Erro interno na Veterinaria.',
       caminho: req.url,
     });
+    next()
   };
   
   module.exports = errorHandler;
